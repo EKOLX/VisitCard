@@ -1,30 +1,75 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-  Button,
-} from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
+import Card from "../components/Card";
 
 function MainScreen(props) {
+  const data = [
+    {
+      id: 1,
+      profession: "Software Engineer",
+      name: "Elkhan",
+      price: "33",
+      currency: "USD",
+      isPerHour: true,
+    },
+    {
+      id: 2,
+      profession: "Film Director",
+      name: "Nancy",
+      price: "100",
+      currency: "USD",
+      isPerHour: true,
+    },
+    {
+      id: 3,
+      profession: "Game Developer",
+      name: "Rasul",
+      price: "3000",
+      currency: "USD",
+      isPerHour: false,
+    },
+    {
+      id: 4,
+      profession: "DJ",
+      name: "Echo",
+      price: "66",
+      currency: "USD",
+      isPerHour: true,
+    },
+    {
+      id: 5,
+      profession: "Motivator",
+      name: "Lee",
+      price: "10",
+      currency: "USD",
+      isPerHour: true,
+    },
+    {
+      id: 6,
+      profession: "Musician",
+      name: "Timur",
+      price: "77",
+      currency: "USD",
+      isPerHour: true,
+    },
+  ];
+
+  const cardTapHandler = (id) => {
+    console.log(id);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hey</Text>
-      <Image
-        blurRadius={10}
-        source={{
-          width: 200,
-          height: 300,
-          uri: "https://picsum.photos/200/300",
-        }}
+      <Text style={styles.header}>Vist Cards</Text>
+      <FlatList
+        keyExtractor={(item, index) => item.id.toString()}
+        data={data}
+        renderItem={(itemData) => (
+          <Card item={itemData.item} onTap={cardTapHandler} />
+        )}
       />
-      <Button
-        title="Click me!"
-        onPress={() => console.log("Button clicked.")}
-      />
+
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -33,7 +78,9 @@ function MainScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
   },
+  header: { alignSelf: "center" },
 });
 
 export default MainScreen;
