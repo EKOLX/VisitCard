@@ -4,7 +4,7 @@ import { Button, Image, StyleSheet, Text, View, Alert } from "react-native";
 import colors from "../configs/colors";
 
 function DetailScreen(props) {
-  const [profession, setProfession] = useState("Software Developer");
+  const { profession, name, price, currency, isPerHour } = props.route.params;
 
   const contactHandler = () =>
     Alert.alert("Contact", "Phone number: +1234567890", [{ text: "OK" }]);
@@ -16,12 +16,14 @@ function DetailScreen(props) {
         source={{ uri: "https://picsum.photos/200/300" }}
       />
       <View style={styles.header}>
-        <Text>{profession}</Text>
+        <Text style={styles.headerTitle}>{profession}</Text>
         <Button title="Contact" onPress={contactHandler} />
       </View>
       <View style={styles.detail}>
-        <Text>Name: Elkhan</Text>
-        <Text>Price: 33$ per hour</Text>
+        <Text>Name: {name}</Text>
+        <Text>
+          Price: {price} {currency} {isPerHour ? "per hour" : "per month"}
+        </Text>
       </View>
       <View style={styles.description}>
         <Text>Mobile application developer.</Text>
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  headerTitle: { fontSize: 26, color: colors.primary },
   detail: { justifyContent: "center", alignItems: "center" },
   description: { padding: 10 },
 });

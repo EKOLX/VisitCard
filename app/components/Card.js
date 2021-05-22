@@ -7,7 +7,7 @@ function Card(props) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={props.onTap.bind(this, props.item.id)}
+      onPress={props.onTap.bind(this, props.item)}
     >
       <View style={styles.card}>
         <View style={styles.leftBlock}>
@@ -41,6 +41,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderColor: "#e67e22",
     borderWidth: 1,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.4,
+    elevation: 8,
+    backgroundColor: "white",
+    padding: 10,
+    marginVertical: 10,
+    borderRadius: 10,
   },
   leftBlock: {
     flex: 0.4,

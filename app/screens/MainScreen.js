@@ -1,7 +1,9 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
+
 import Card from "../components/Card";
+import colors from "../configs/colors";
 
 function MainScreen(props) {
   const data = [
@@ -55,18 +57,17 @@ function MainScreen(props) {
     },
   ];
 
-  const cardTapHandler = (id) => {
-    console.log(id);
+  const navigationHandler = (detail) => {
+    props.navigation.navigate("Details", detail);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Vist Cards</Text>
       <FlatList
         keyExtractor={(item, index) => item.id.toString()}
         data={data}
         renderItem={(itemData) => (
-          <Card item={itemData.item} onTap={cardTapHandler} />
+          <Card item={itemData.item} onTap={navigationHandler} />
         )}
       />
 
@@ -80,7 +81,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  header: { alignSelf: "center" },
+  headerTitle: {
+    alignSelf: "center",
+    color: colors.primary,
+    fontSize: 22,
+    marginVertical: 10,
+  },
 });
 
 export default MainScreen;
