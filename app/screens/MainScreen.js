@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
 
@@ -6,66 +6,57 @@ import Card from "../components/Card";
 import colors from "../configs/colors";
 
 function MainScreen(props) {
-  const data = [
-    {
-      id: 1,
-      profession: "Software Engineer",
-      name: "Elkhan",
-      price: "33",
-      currency: "USD",
-      isPerHour: true,
-    },
-    {
-      id: 2,
-      profession: "Film Director",
-      name: "Nancy",
-      price: "100",
-      currency: "USD",
-      isPerHour: true,
-    },
-    {
-      id: 3,
-      profession: "Game Developer",
-      name: "Rasul",
-      price: "3000",
-      currency: "USD",
-      isPerHour: false,
-    },
-    {
-      id: 4,
-      profession: "DJ",
-      name: "Echo",
-      price: "66",
-      currency: "USD",
-      isPerHour: true,
-    },
-    {
-      id: 5,
-      profession: "Motivator",
-      name: "Lee",
-      price: "10",
-      currency: "USD",
-      isPerHour: true,
-    },
-    {
-      id: 6,
-      profession: "Musician",
-      name: "Timur",
-      price: "77",
-      currency: "USD",
-      isPerHour: true,
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [visitCards, setVisitCards] = useState([]);
+
+  const apiUrl = "https://visit-card-10b2b-default-rtdb.firebaseio.com";
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${apiUrl}/visitCards.json`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const cards = [];
+
+        for (const key in data) {
+          for (const index in data[key]) {
+            const card = {
+              ...data[key][index],
+            };
+            cards.push(card);
+          }
+        }
+
+        setVisitCards(cards);
+        setLoading(false);
+      });
+  }, []);
+
+  const dbHandler = () => {
+    fetch(`${apiUrl}/visitCards.json`, {
+      method: "POST",
+      body: JSON.stringify(visitCards),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 
   const navigationHandler = (detail) => {
     props.navigation.navigate("Details", detail);
   };
 
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         keyExtractor={(item, index) => item.id.toString()}
-        data={data}
+        data={visitCards}
         renderItem={(itemData) => (
           <Card item={itemData.item} onTap={navigationHandler} />
         )}

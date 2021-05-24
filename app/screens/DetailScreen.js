@@ -4,7 +4,8 @@ import { Button, Image, StyleSheet, Text, View, Alert } from "react-native";
 import colors from "../configs/colors";
 
 function DetailScreen(props) {
-  const { profession, name, price, currency, isPerHour } = props.route.params;
+  const { profession, name, price, currency, isPerHour, description } =
+    props.route.params;
 
   const contactHandler = () =>
     Alert.alert("Contact", "Phone number: +1234567890", [{ text: "OK" }]);
@@ -26,7 +27,7 @@ function DetailScreen(props) {
         </Text>
       </View>
       <View style={styles.description}>
-        <Text>Mobile application developer.</Text>
+        <Text>{description}</Text>
       </View>
     </View>
   );
