@@ -1,2 +1,2 @@
 # VisitCard
-React Native app.
+React Native app + Firebase.
